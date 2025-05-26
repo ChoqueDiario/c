@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Choque Diário</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #dadada;
+  }
+  body { display: flex; flex-direction: column; }
+  .main-container {
+    flex: 1;
+    padding-left: 0;
+    transition: padding-left 0.4s ease;
+  }
+  .topbar {
+    background-color: #000000;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    color: rgb(255, 208, 0);
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-img {
+    height: 1.5em;
+    width: auto;
+  }
+  .menu-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 15px;
+    user-select: none;
+  }
+  .topbar h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(255, 208, 0);
+  }
+  .sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0; left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+    z-index: 1000;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar a {
+    padding: 10px 25px;
+    text-decoration: none;
+    font-size: 1.1em;
+    color: white;
+    display: block;
+    transition: 0.2s;
+    cursor: pointer;
+  }
+  .sidebar a:hover {
+    background-color: #575757;
+  }
+  .sidebar a.active {
+    background-color: rgb(255, 208, 0);
+    color: black;
+    font-weight: bold;
+  }
+  .close-btn {
+    position: absolute; top: 10px; right: 20px;
+    font-size: 2em;
+    background: none; border: none;
+    color: rgb(252, 227, 0);
+    cursor: pointer;
+    user-select: none;
+  }
+  .conteudo {
+    padding: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .conteudo h2, .conteudo h3 {
+    color: #b4a62a;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .noticia-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    max-width: 700px;
+  }
+  .noticia-img {
+    width: 40%;
+    object-fit: cover;
+  }
+  .noticia-texto {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .noticia-texto h4 {
+    color: #b4a62a;
+    margin-bottom: 10px;
+  }
+  .noticia-texto p {
+    color: #333;
+    font-size: 0.95em;
+    margin-bottom: 15px;
+  }
+  .botao-leia-mais {
+    background-color: #b4a62a;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    width: fit-content;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .botao-leia-mais:hover {
+    background-color: #96891f;
+  }
+  footer {
+    background-color: #333;
+    color: rgb(250, 250, 250);
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+  <div id="sidebar" class="sidebar">
+    <button class="close-btn" aria-label="Fechar menu">&times;</button>
+    <a data-page="inicio" class="active">Início</a>
+    <a data-page="saude">Saúde</a>
+    <a data-page="economia">Economia</a>
+    <a data-page="politica">Política</a>
+    <a data-page="ambiente">Ambiente</a>
+    <a data-page="esportes">Esportes</a>
+    <a data-page="opiniao">Opinião</a>
+    <a data-page="social">Social</a>
+    <a data-page="cultura">Cultura</a>
+  </div>
+
+  <header class="topbar">
+    <div class="logo-container">
+      <i class="fas fa-bars menu-icon" aria-label="Abrir menu"></i>
+     <img src="logo.jpg.jpg" alt="Logo do Choque Diário" class="logo-img" />
+      <h1>CHOQUE DIÁRIO</h1>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <main id="conteudo" class="conteudo">
+      <!-- Conteúdo será carregado aqui -->
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Choque Diário - Professor César Campelo</p>
+  </footer>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const menuIcon = document.querySelector(".menu-icon");
+  const closeBtn = document.querySelector(".close-btn");
+  const links = sidebar.querySelectorAll("a");
+  const conteudo = document.getElementById("conteudo");
+
+  const exemploNoticia = `
+    <div class="noticia-card">
+      <div class="noticia-texto">
+      </div>
+    </div>
+  `;
+
+  const paginas = {
+    inicio: `
+      <section>
+        <h2>Destaque de Hoje</h2>
+        <p><strong>Confira as principais notícias do estado do Ceará</strong></p>
+      </section>
+      <section>
+        <h3>Últimas Notícias</h3>
+        ${exemploNoticia}
+      </section>
+    `,
+    saude: `
+      <section>
+        <h2>Saúde</h2>
+        <p>Últimas notícias e atualizações na área da saúde.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    economia: `
+      <section>
+        <h2>Economia</h2>
+        <p>Análises e notícias econômicas recentes.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    politica: `
+      <section>
+        <h2>Política</h2>
+        <p>Notícias sobre política local e nacional.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    ambiente: `
+      <section>
+        <h2>Ambiente</h2>
+        <p>Notícias e reportagens sobre meio ambiente.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    esportes: `
+      <section>
+        <h2>Esportes</h2>
+        <p>Atualizações esportivas e resultados recentes.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    opiniao: `
+      <section>
+        <h2>Opinião</h2>
+        <p>Colunas e artigos de opinião.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    social: `
+      <section>
+        <h2>Social</h2>
+        <p>Eventos e notícias sociais locais.</p>
+        ${exemploNoticia}
+      </section>
+    `,
+    cultura: `
+      <section>
+        <h2>Cultura</h2>
+        <p>Destaques culturais e eventos artísticos.</p>
+        ${exemploNoticia}
+      </section>
+    `
+  };
+
+  menuIcon.addEventListener("click", () => {
+    sidebar.classList.add("open");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+  });
+
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      const page = link.getAttribute("data-page");
+      if (!page) return;
+      conteudo.innerHTML = paginas[page] || "<p>Página não encontrada.</p>";
+      sidebar.classList.remove("open");
+      links.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+      document.title = `Choque Diário - ${link.textContent}`;
+    });
+  });
+
+  window.addEventListener("load", () => {
+    conteudo.innerHTML = paginas["inicio"];
+  });
+</script>
+
+</body>
+</html>
