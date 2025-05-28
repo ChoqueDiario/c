@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Choque Diário</title>
+  <title>Choque Diário - Esportes</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; font-family: Arial, sans-serif; background-color: #dadada; }
     body { display: flex; flex-direction: column; }
     .main-container { flex: 1; padding-left: 0; transition: padding-left 0.4s ease; max-width: 700px; margin: 20px auto; }
-
     .topbar { background-color: #000000; padding: 15px 20px; display: flex; align-items: center; color: rgb(255, 208, 0); }
     .logo-container { display: flex; align-items: center; gap: 10px; }
     .logo-img { height: 1.5em; width: auto; }
     .menu-icon { font-size: 1.5em; cursor: pointer; margin-right: 15px; user-select: none; }
     .topbar h1 { font-size: 1.5em; font-weight: bold; color: rgb(255, 208, 0); }
-
     .sidebar {
       height: 100%; width: 250px; position: fixed; top: 0; left: 0;
       background-color: #111; overflow-x: hidden; padding-top: 60px;
@@ -34,75 +32,22 @@
       font-size: 2em; background: none; border: none;
       color: rgb(252, 227, 0); cursor: pointer; user-select: none;
     }
-
+    h2 { color: #b4a62a; margin-bottom: 10px; text-align: center; }
     footer {
       background-color: #333; color: rgb(250, 250, 250);
       text-align: center; padding: 15px; margin-top: 40px;
-    }
-
-    .news-card {
-      background: white;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 700px;
-    }
-    .news-card h2 {
-      color: #b4a62a;
-      text-align: center;
-    }
-    .news-card p {
-      text-align: justify;
-      margin-top: 15px;
-    }
-    .news-card a {
-      display: inline-block;
-      background-color: #b4a62a;
-      color: white;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 15px;
-    }
-    .news-card a:hover {
-      background-color: #9b8d21;
-    }
-
-    /* Novos estilos para os textos acima da notícia */
-    .section-header {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    .section-header .inicio {
-      color: #b4a62a;
-      font-size: 1.3em; /* diminui um pouco */
-      font-weight: bold;
-      letter-spacing: 0.05em;
-      margin-bottom: 15px; /* mais espaço abaixo */
-    }
-    .section-header .subtitulo {
-      color: #c9b44b;
-      font-size: 1.4em;
-      font-weight: 900;
-      margin-top: 5px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-      text-transform: uppercase;
-      border-bottom: 3px solid #c9b44b;
-      display: inline-block;
-      padding-bottom: 5px;
     }
   </style>
 </head>
 <body>
   <div id="sidebar" class="sidebar">
     <button class="close-btn" aria-label="Fechar menu">&times;</button>
-    <a href="index.html" class="active">Início</a>
+    <a href="index.html">Início</a>
     <a href="saude.html">Saúde</a>
     <a href="economia.html">Economia</a>
     <a href="politica.html">Política</a>
     <a href="ambiente.html">Ambiente</a>
-    <a href="esportes.html">Esportes</a>
+    <a href="esportes.html" class="active">Esportes</a>
     <a href="opiniao.html">Opinião</a>
     <a href="social.html">Social</a>
     <a href="cultura.html">Cultura</a>
@@ -117,20 +62,10 @@
   </header>
 
   <div class="main-container">
-    <div class="section-header">
-      <div class="inicio">INÍCIO</div>
-      <div class="subtitulo">Confira as últimas notícias</div>
-    </div>
-
-    <div class="news-card">
-      <h2>Gangues de cabras volta a furtar pães no Ceará</h2>
-      <p>
-        Caso ocorreu em Boa Viagem, no sertão cearense. No vídeo, os animais aparecem comendo os pães que acabaram de ser entregues em uma residência.
-      </p>
-      <div style="text-align:center;">
-        <a href="cabras.html">Leia mais</a>
-      </div>
-    </div>
+    <main>
+      <h2>Esportes</h2>
+      <p style="text-align:center; margin-top: 30px;">Noticias Em Breve.</p>
+    </main>
   </div>
 
   <footer>
@@ -145,7 +80,6 @@
 
     menuIcon.addEventListener("click", () => sidebar.classList.add("open"));
     closeBtn.addEventListener("click", () => sidebar.classList.remove("open"));
-
     links.forEach(link => {
       link.addEventListener("click", () => {
         sidebar.classList.remove("open");
